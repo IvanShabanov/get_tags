@@ -19,15 +19,15 @@ function get_tags($tag, $content, $haveClosedTag = true)
 	$arFilter = [];
 	if (!empty($seletorIds[1])) {
 		$arFilter['id'] = $seletorIds[1];
-	};
+	}
 	if (!empty($seletorClass[1])) {
 		$arFilter['class'] = $seletorClass[1];
-	};
+	}
 	if (is_array($seletorParams[1])) {
 		foreach ($seletorParams[1] as $key => $val) {
 			$arFilter[$val][] = $seletorParams[2][$key];
-		};
-	};
+		}
+	}
 	if ($tag == '') {
 		return;
 	}
@@ -52,17 +52,17 @@ function get_tags($tag, $content, $haveClosedTag = true)
 	];
 
 	if (!in_array($tag, $notClosedTags) && $haveClosedTag) {
-		$arTag['tag'] = '/(<' . $tag . '[^>]*>)(.*)<\/' . $tag . '>/ismuU';;
+		$arTag['tag'] = '/(<' . $tag . '[^>]*>)(.*)<\/' . $tag . '>/ismuU';
 	} else {
 		$arTag['tag'] = '/(<' . $tag . '[^>]*>)/ismuU';
-	};
+	}
 
 	$arTag['attr'][0] = '/\s+([a-zA-Z-]+)\s*=\s*"([^"]*)"/ismuU';
-	$arTag['attr'][] = str_replace('"', "'", $arTag['attr'][0]);
-	$result = [];
+	$arTag['attr'][]  = str_replace('"', "'", $arTag['attr'][0]);
+	$result           = [];
 	if (preg_match_all($arTag['tag'], $content, $matches)) {
 		foreach ($matches[0] as $k => $match) {
-			$res_tag = [];
+			$res_tag        = [];
 			$res_tag['tag'] = $match;
 			if (isset($matches[1][$k])) {
 				foreach ($arTag['attr'] as $arTagAttr) {
@@ -71,13 +71,13 @@ function get_tags($tag, $content, $haveClosedTag = true)
 					if (is_array($attr_matches[1])) {
 						foreach ($attr_matches[1] as $key => $val) {
 							$res_tag[$val] = $attr_matches[2][$key];
-						};
-					};
-				};
-			};
+						}
+					}
+				}
+			}
 			if (isset($matches[2][$k])) {
 				$res_tag['text'] = $matches[2][$k];
-			};
+			}
 			$ok = true;
 			if (!empty($arFilter)) {
 				foreach ($arFilter as $attrkey => $arValues) {
@@ -100,7 +100,7 @@ function get_tags($tag, $content, $haveClosedTag = true)
 			if ($ok) {
 				$result[] = $res_tag;
 			}
-		};
-	};
+		}
+	}
 	return $result;
 }
