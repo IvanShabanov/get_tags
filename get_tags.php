@@ -1,13 +1,13 @@
 <?
 function get_tags($tag, $content, $haveClosedTag = true)
 {
-	preg_match_all('/^([a-zA-Z]+)/', $tag, $seletorTag);
+	preg_match_all('/^([a-zA-Z0-9]+)/', $tag, $seletorTag);
 	preg_match_all('/#([a-zA-Z0-9-_]+)*/', $tag, $seletorIds);
 	preg_match_all('/\.([a-zA-Z0-9-_]+)*/', $tag, $seletorClass);
 	preg_match_all('/\[(.*)\]/', $tag, $seletorParams);
 	if (!empty($seletorParams[1][0])) {
 		$strParams = ' ' . str_replace(',', ' ', $seletorParams[1][0]);
-		preg_match_all('/\s+([a-zA-Z-]+)\s*=\s*"([^"]*)"/ismuU', $strParams, $seletorParams);
+		preg_match_all('/\s+([a-zA-Z0-9-]+)\s*=\s*"([^"]*)"/ismuU', $strParams, $seletorParams);
 	} else {
 		$seletorParams = [];
 	}
